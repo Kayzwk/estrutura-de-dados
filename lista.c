@@ -22,7 +22,7 @@ void adicionarAluno() {
     struct Aluno novoAluno;
     
     printf("Digite o nome completo do aluno: "); // mensagem de entrada alterada
-    scanf(" %[^\n]s", novoAluno.nome); // utilização de espaço em branco e %[^\n]s para ler todo o nome com espaço
+    scanf(" %[^\n]s", novoAluno.nome); // utilizaÃ§Ã£o de espaÃ§o em branco e %[^\n]s para ler todo o nome com espaÃ§o
     
     printf("Digite a idade do aluno: ");
     scanf("%d", &novoAluno.idade);
@@ -73,7 +73,7 @@ void imprimirAlunos() {
     int i, j, min_index;
     struct Aluno temp;
 
-    // selection sort para ordenar a lista de alunos em ordem alfabética pelo nome
+    // selection sort para ordenar a lista de alunos em ordem alfabÃ©tica pelo nome
     for (i = 0; i < numAlunos - 1; i++) {
         min_index = i;
         for (j = i + 1; j < numAlunos; j++) {
@@ -88,7 +88,7 @@ void imprimirAlunos() {
         }
     }
 
-    // imprimir a lista de alunos ordenada em ordem alfabética pelo nome
+    // imprimir a lista de alunos ordenada em ordem alfabÃ©tica pelo nome
     for (i = 0; i < numAlunos; i++) {
         printf("Nome: %s\n", listaAlunos[i].nome);
         printf("Idade: %d\n", listaAlunos[i].idade);
@@ -98,6 +98,47 @@ void imprimirAlunos() {
     }
 }
 
+void buscarAluno() {
+    char opcao;
+    printf("Digite 'n' para buscar por nome ou 'e' para buscar por email: ");
+    scanf(" %c", &opcao);
+
+    if (opcao != 'n' && opcao != 'e') {
+        printf("Opcao invalida.\n");
+        return;
+    }
+
+    char termo[50];
+    printf("Digite o termo de busca: ");
+    scanf("%s", termo);
+
+    int i;
+    for (i = 0; i < numAlunos; i++) {
+        struct Aluno atual = listaAlunos[i];
+        if (opcao == 'n') {
+            if (strcmp(atual.nome, termo) == 0) {
+                printf("Aluno encontrado:\n");
+                printf("Nome: %s\n", atual.nome);
+                printf("Idade: %d\n", atual.idade);
+                printf("Email: %s\n", atual.email);
+                printf("Celular: %s\n", atual.celular);
+                return;
+            }
+        } else if (opcao == 'e') {
+            if (strcmp(atual.email, termo) == 0) {
+                printf("Aluno encontrado:\n");
+                printf("Nome: %s\n", atual.nome);
+                printf("Idade: %d\n", atual.idade);
+                printf("Email: %s\n", atual.email);
+                printf("Celular: %s\n", atual.celular);
+                return;
+            }
+        }
+    }
+
+    printf("Aluno nao encontrado.\n");
+}
+
 int main() {
     int opcao;
     
@@ -105,8 +146,9 @@ int main() {
         printf("Escolha uma opcao:\n");
         printf("1. Adicionar aluno\n");
         printf("2. Remover aluno\n");
-        printf("3. Imprimir lista de alunos\n");
-        printf("4. Sair\n");
+        printf("3. Imprimir lista de alunos em ordem alfabetica\n");
+        printf("4. Buscar aluno por nome ou email\n");
+        printf("5. Sair\n");
         printf("Opcao: ");
         scanf("%d", &opcao);
         
@@ -121,14 +163,16 @@ int main() {
                 imprimirAlunos();
                 break;
             case 4:
+                buscarAluno();
+                break;
+            case 5:
                 printf("Encerrando o programa...\n");
                 break;
             default:
                 printf("Opcao invalida.\n");
                 break;
         }
-    } while (opcao != 4);
+    } while (opcao != 5);
 
     return 0;
 }
-
